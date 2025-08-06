@@ -20,7 +20,11 @@ const app = express();
 
 app.use(cors({
   credentials: true,
-  origin: process.env.CLIENT_URL || "http://localhost:5173",
+  origin: [
+    process.env.CLIENT_URL || "http://localhost:5173",
+    "https://a5--kambaz-react-web-app-cs5610-25summer.netlify.app",
+    "https://kambaz-react-web-app-cs5610-25summer.netlify.app"
+  ],
 }
 ));
 
@@ -34,7 +38,7 @@ if (process.env.SERVER_ENV !== "development") {
   sessionOptions.cookie = {
     sameSite: "none",
     secure: true,
-    domain: process.env.SERVER_URL,
+    // domain: process.env.SERVER_URL,
   };
 }
 
