@@ -25,6 +25,7 @@ app.use(cors({
   credentials: true,
   origin: [
     process.env.CLIENT_URL || "http://localhost:5173",
+    "https://a6--kambaz-react-web-app-cs5610-25summer.netlify.app",
     "https://a5--kambaz-react-web-app-cs5610-25summer.netlify.app",
     "https://kambaz-react-web-app-cs5610-25summer.netlify.app"
   ],
