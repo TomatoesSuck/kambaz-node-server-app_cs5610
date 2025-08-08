@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "simple RESTful web api server",
   "license": "ISC",
-  "author": "Junyao Han",
+  "author": "Jiaming Pei",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -16,6 +16,8 @@
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "express-session": "^1.18.2",
+    "mongodb": "^6.18.0",
+    "mongoose": "^8.17.1",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
