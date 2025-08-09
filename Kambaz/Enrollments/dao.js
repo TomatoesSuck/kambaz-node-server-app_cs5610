@@ -1,58 +1,27 @@
-import Database from "../Database/index.js";
-import { v4 as uuidv4 } from "uuid";
+import model from "./model.js";
 
-export function findAllEnrollments() {
-  return Database.enrollments;
+// find courses for user
+export async function findCoursesForUser(userId) {
+ const enrollments = await model.find({ user: userId }).populate("course");
+ return enrollments.map((enrollment) => enrollment.course);
 }
 
-export function findEnrollmentsForUser(userId) {
-  return Database.enrollments.filter((enrollment) => enrollment.user === userId);
+// find users for course
+export async function findUsersForCourse(courseId) {
+ const enrollments = await model.find({ course: courseId }).populate("user");
+ return enrollments.map((enrollment) => enrollment.user);
 }
 
-export function findEnrollmentsForCourse(courseId) {
-  return Database.enrollments.filter((enrollment) => enrollment.course === courseId);
+// enroll user in course
+export function enrollUserInCourse(user, course) {
+    return model.create({ user, course, _id: `${user}-${course}` });
 }
 
-export function findEnrollmentById(enrollmentId) {
-  return Database.enrollments.find((enrollment) => enrollment._id === enrollmentId);
+// unenroll user from course
+export function unenrollUserFromCourse(user, course) {
+    return model.deleteOne({ user, course });
 }
 
-export function findEnrollmentByUserAndCourse(userId, courseId) {
-  return Database.enrollments.find((enrollment) => 
-    enrollment.user === userId && enrollment.course === courseId
-  );
-}
+   
 
-export function enrollUserInCourse(userId, courseId) {
-  const existingEnrollment = findEnrollmentByUserAndCourse(userId, courseId);
-  if (existingEnrollment) {
-    return existingEnrollment;
-  }
-  
-  const newEnrollment = {
-    _id: uuidv4(),
-    user: userId,
-    course: courseId
-  };
-  
-  Database.enrollments.push(newEnrollment);
-  return newEnrollment;
-}
 
-export function unenrollUserFromCourse(userId, courseId) {
-  const enrollment = findEnrollmentByUserAndCourse(userId, courseId);
-  if (enrollment) {
-    Database.enrollments = Database.enrollments.filter(
-      (e) => !(e.user === userId && e.course === courseId)
-    );
-    return { success: true };
-  }
-  return { success: false, error: "Enrollment not found" };
-}
-
-export function deleteEnrollment(enrollmentId) {
-  Database.enrollments = Database.enrollments.filter(
-    (enrollment) => enrollment._id !== enrollmentId
-  );
-  return { success: true };
-}
