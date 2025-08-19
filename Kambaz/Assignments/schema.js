@@ -8,7 +8,7 @@ const assignmentSchema = new mongoose.Schema(
     points: Number,
     availableDate: String,
     dueDate: String,
-    module: { type: String, ref: "CourseModel"}, 
+    course: { type: String, ref: "CourseModel"},
   },
   { collection: "assignments" }
 );
